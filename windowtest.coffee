@@ -42,10 +42,12 @@ Template.begin_tests.events
 Template.begin_tests.show = -> window.location.pathname is '/'
 
 closeChildWindows = ->
-  for i in [1 .. numberOfWindowsToOpen]
-    childWindows[i]?.close()
+  Meteor.BrowserMsg.send 'close windows'
 
 Meteor.autorun (handle) ->
   if not Template.test_table.running() and Template.test_table.passed()
     handle.stop()
     closeChildWindows()
+
+if window.location.pathname isnt '/'
+  Meteor.BrowserMsg.listen 'close windows': window.close()

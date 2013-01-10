@@ -60,12 +60,7 @@
   };
 
   closeChildWindows = function() {
-    var i, _i, _ref, _results;
-    _results = [];
-    for (i = _i = 1; 1 <= numberOfWindowsToOpen ? _i <= numberOfWindowsToOpen : _i >= numberOfWindowsToOpen; i = 1 <= numberOfWindowsToOpen ? ++_i : --_i) {
-      _results.push((_ref = childWindows[i]) != null ? _ref.close() : void 0);
-    }
-    return _results;
+    return Meteor.BrowserMsg.send('close windows');
   };
 
   Meteor.autorun(function(handle) {
@@ -74,5 +69,11 @@
       return closeChildWindows();
     }
   });
+
+  if (window.location.pathname !== '/') {
+    Meteor.BrowserMsg.listen({
+      'close windows': window.close()
+    });
+  }
 
 }).call(this);
