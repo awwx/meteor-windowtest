@@ -17,7 +17,7 @@
     if (recorded_arguments == null) {
       throw new Error("oops, test-in-browser hasn't called _runTestsEverywhere yet");
     }
-    return originalRunTestsEverywhere(recordedArguments.onReport, recordedArguments.onComplete);
+    return originalRunTestsEverywhere(recorded_arguments.onReport, recorded_arguments.onComplete);
   };
 
   runBeforeTests = null;

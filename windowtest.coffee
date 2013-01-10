@@ -11,7 +11,7 @@ Meteor._runTestsEverywhere = (onReport, onComplete) ->
 runTests = ->
   unless recorded_arguments?
     throw new Error "oops, test-in-browser hasn't called _runTestsEverywhere yet"
-  originalRunTestsEverywhere recordedArguments.onReport, recordedArguments.onComplete
+  originalRunTestsEverywhere recorded_arguments.onReport, recorded_arguments.onComplete
 
 runBeforeTests = null
 numberOfWindowsToOpen = 0
