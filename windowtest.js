@@ -42,8 +42,10 @@
     'click #begin-tests-button': function() {
       var i, _i;
       $('#begin-tests-div').hide();
-      for (i = _i = 1; 1 <= numberOfWindowsToOpen ? _i <= numberOfWindowsToOpen : _i >= numberOfWindowsToOpen; i = 1 <= numberOfWindowsToOpen ? ++_i : --_i) {
-        childWindows[i] = window.open("/child" + i, "child" + i, 'menubar=yes,toolbar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes');
+      if (numberOfWindowsToOpen >= 1) {
+        for (i = _i = 1; 1 <= numberOfWindowsToOpen ? _i <= numberOfWindowsToOpen : _i >= numberOfWindowsToOpen; i = 1 <= numberOfWindowsToOpen ? ++_i : --_i) {
+          childWindows[i] = window.open("/child" + i, "child" + i, 'menubar=yes,toolbar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes');
+        }
       }
       if (runBeforeTests != null) {
         return runBeforeTests(function() {
@@ -72,7 +74,9 @@
 
   if (window.location.pathname !== '/') {
     Meteor.BrowserMsg.listen({
-      'close windows': window.close()
+      'close windows': function() {
+        return window.close();
+      }
     });
   }
 

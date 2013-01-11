@@ -30,9 +30,10 @@ Template.begin_tests.events
   'click #begin-tests-button': ->
     $('#begin-tests-div').hide()
 
-    for i in [1 .. numberOfWindowsToOpen]
-      childWindows[i] = window.open "/child#{i}", "child#{i}",
-        'menubar=yes,toolbar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes'
+    if numberOfWindowsToOpen >= 1
+      for i in [1 .. numberOfWindowsToOpen]
+        childWindows[i] = window.open "/child#{i}", "child#{i}",
+          'menubar=yes,toolbar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes'
 
     if runBeforeTests?
       runBeforeTests -> runTests()
@@ -50,4 +51,4 @@ Meteor.autorun (handle) ->
     closeChildWindows()
 
 if window.location.pathname isnt '/'
-  Meteor.BrowserMsg.listen 'close windows': window.close()
+  Meteor.BrowserMsg.listen 'close windows': -> window.close()
