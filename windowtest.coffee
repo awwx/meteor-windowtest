@@ -5,13 +5,13 @@ originalRunTestsEverywhere = Meteor._runTestsEverywhere
 
 recorded_arguments = null
 
-Meteor._runTestsEverywhere = (onReport, onComplete) ->
-  recorded_arguments = {onReport, onComplete}
+Meteor._runTestsEverywhere = (args...) ->
+  recorded_arguments = args
 
 runTests = ->
   unless recorded_arguments?
-    throw new Error "oops, test-in-browser hasn't called _runTestsEverywhere yet"
-  originalRunTestsEverywhere recorded_arguments.onReport, recorded_arguments.onComplete
+    throw new Error "test-in-browser hasn't called _runTestsEverywhere yet"
+  originalRunTestsEverywhere(recorded_arguments...)
 
 runBeforeTests = null
 numberOfWindowsToOpen = 0
